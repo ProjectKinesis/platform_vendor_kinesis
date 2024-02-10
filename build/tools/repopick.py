@@ -184,9 +184,9 @@ def is_closed(status):
     return status not in ("OPEN", "NEW", "DRAFT")
 
 
-def is_lineage_gerrit(remote_url):
+def is_kinesis_gerrit(remote_url):
     p = urllib.parse.urlparse(remote_url)
-    return p.hostname == "review.lineageos.org"
+    return p.hostname == "review.kinesisos.org"
 
 
 def commit_exists(project_path, revision):
@@ -206,7 +206,7 @@ def main():
         description=textwrap.dedent(
             """\
         repopick.py is a utility to simplify the process of cherry picking
-        patches from LineageOS's Gerrit instance (or any gerrit instance of your choosing)
+        patches from kinesisOS's Gerrit instance (or any gerrit instance of your choosing)
 
         Given a list of change numbers, repopick will cd into the project path
         and cherry pick the latest patch available.
@@ -287,7 +287,7 @@ def main():
     parser.add_argument(
         "-g",
         "--gerrit",
-        default="https://review.lineageos.org",
+        default="https://review.kinesisos.org",
         metavar="",
         help="Gerrit Instance to use. Form proto://[user@]host[:port]",
     )
@@ -637,8 +637,8 @@ def do_git_fetch_pull(args, item):
         cmd.append("--quiet")
     cmd.extend(["", item["fetch"][method]["ref"]])
 
-    # Try fetching from GitHub first if using lineage gerrit
-    if is_lineage_gerrit(args.gerrit):
+    # Try fetching from GitHub first if using kinesis gerrit
+    if is_kinesis_gerrit(args.gerrit):
         if args.verbose:
             print("Trying to fetch the change from GitHub")
 
@@ -651,9 +651,9 @@ def do_git_fetch_pull(args, item):
             return
         print("ERROR: git command failed")
 
-    # If not using the lineage gerrit or github failed, fetch from gerrit.
+    # If not using the kinesis gerrit or github failed, fetch from gerrit.
     if args.verbose:
-        if is_lineage_gerrit(args.gerrit):
+        if is_kinesis_gerrit(args.gerrit):
             print(
                 "Fetching from GitHub didn't work, trying to fetch the change from Gerrit"
             )

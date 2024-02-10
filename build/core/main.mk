@@ -1,2 +1,2 @@
-# Include LineageOS versions
-include $(TOPDIR)vendor/lineage/build/core/main_version.mk
+# Include Project Kinesis versions
+include $(TOPDIR)vendor/kinesis/build/core/main_version.mk
